@@ -1,0 +1,3 @@
+az group create -l australiaeast -n [resourceGroup]
+az deployment group what-if -g [resourceGroup] --template-file ./arm_templates/deployment.json --parameters ./arm_templates/deployment.parameters.json
+az deployment group create -g [resourceGroup] -n armdeployment_demo --template-file ./arm_templates/deployment.json --parameters ./arm_templates/deployment.parameters.json
