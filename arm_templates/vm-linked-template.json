@@ -100,8 +100,7 @@
                "apiVersion": "2019-11-01",
                "location": "[resourceGroup().location]",
                "dependsOn": [
-                    "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('pip'),copyIndex()))]",
-                    "[variables('vnet')]"
+                    "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('pip'),copyIndex()))]"
                ],
                "tags": {
                     "displayName": "[concat(variables('nic'),' Network Interface')]"
@@ -116,7 +115,7 @@
                                         "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pip'))]"
                                    },
                                    "subnet": {
-                                        "id": "[variables('subnet')]"
+                                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnet'), parameters('subnet'))]"
                                    }
                               }
                          }
