@@ -93,7 +93,7 @@
                }
           },
           {
-               "name": "[variables('nic')]",
+               "name": "[concat(variables('nic'),copyIndex())]",
                "type": "Microsoft.Network/networkInterfaces",
                "apiVersion": "2019-11-01",
                "location": "[resourceGroup().location]",
@@ -101,7 +101,7 @@
                     "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('pip'),copyIndex()))]"
                ],
                "tags": {
-                    "displayName": "[concat(variables('nic'),' Network Interface')]"
+                    "displayName": "[concat(variables('nic'),copyIndex(),' Network Interface')]"
                },
                "properties": {
                     "ipConfigurations": [
@@ -110,7 +110,7 @@
                               "properties": {
                                    "privateIPAllocationMethod": "Dynamic",
                                    "publicIPAddress": {
-                                        "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pip'))]"
+                                        "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('pip'),copyIndex()))]"
                                    },
                                    "subnet": {
                                         "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnet'), parameters('subnet'))]"
