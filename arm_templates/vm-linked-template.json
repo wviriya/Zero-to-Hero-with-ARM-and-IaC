@@ -114,7 +114,7 @@
                                         "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pip'))]"
                                    },
                                    "subnet": {
-                                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnet'), parameters('subnet'))]"
+                                        "id": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks/subnets', parameters('vnet'), parameters('subnet'))]"
                                    }
                               }
                          }
