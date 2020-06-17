@@ -10,7 +10,7 @@
           },
           "sku": {
                "type": "string",
-               "defaultValue": "S1",
+               "defaultValue": "B1",
                "metadata": {
                     "description": "App Service Plan SKU/Size"
                }

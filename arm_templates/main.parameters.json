@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vm": {
+            "value": "azninja-vm" // TODO: Fill in parameter value
+        },
+        "size": {
+            "value": "Standard_B1ms"
+        },
+        "username": {
+            "value": "azninja" // TODO: Fill in parameter value
+        },
+        "password": {
+            "value": "" // TODO: Fill in parameter value
+        },
+        "storage": {
+            "value": "azninja" // TODO: Fill in parameter value
+        },
+        "vnet": {
+            "value": "azninja-vms-vnet" // TODO: Fill in parameter value
+        },
+        "_artifactsLocation": {
+            "value": "https://raw.githubusercontent.com/wviriya/Zero-to-Hero-with-ARM-and-IaC/master/arm_templates/"
+        }
+    }
+}

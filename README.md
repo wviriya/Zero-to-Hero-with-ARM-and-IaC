@@ -27,7 +27,7 @@ Basic concept of the follows:
 
 ## About this sample
 
-This sample is a guide for learning ARM, Terraform and Ansible. There are links in this document that can help better understand these services and tools.
+This sample is a guide for learning basic ARM Template. There are links in this document that can help better understand these services and tools.
 
 ## [What is Infrastructure as Code?](https://docs.microsoft.com/en-us/azure/devops/learn/what-is-infrastructure-as-code)
 
