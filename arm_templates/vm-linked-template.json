@@ -58,7 +58,8 @@
           "storage": "[toLower(concat(parameters('storage'),'vmdiagblobstorage'))]",
           "nic": "[concat(parameters('vm'),'-nic')]",
           "pip": "[concat(parameters('vm'),'-pip')]",
-          "resoureGroup": "[resourceGroup().name]"
+          "vnet": "[concat('/subscriptions/',subscription().id,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Network/virtualNetworks/',parameters('vnet'))]",
+          "subnet": "[concat('/subscriptions/',subscription().id,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Network/virtualNetworks/subnets/',parameters('vnet'),'/',parameters('subnet'))]"
      },
      "resources": [
           {
@@ -100,7 +101,7 @@
                "location": "[resourceGroup().location]",
                "dependsOn": [
                     "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('pip'),copyIndex()))]",
-                    "[resourceId(variables('resoureGroup'),'Microsoft.Network/virtualNetworks', parameters('vnet'))]"
+                    "[variables('vnet')]"
                ],
                "tags": {
                     "displayName": "[concat(variables('nic'),' Network Interface')]"
@@ -115,7 +116,7 @@
                                         "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pip'))]"
                                    },
                                    "subnet": {
-                                        "id": "[resourceId(variables('resoureGroup'),'Microsoft.Network/virtualNetworks/subnets', parameters('vnet'), parameters('subnet'))]"
+                                        "id": "[variables('subnet')]"
                                    }
                               }
                          }
