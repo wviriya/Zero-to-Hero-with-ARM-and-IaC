@@ -99,7 +99,7 @@
                "location": "[resourceGroup().location]",
                "dependsOn": [
                     "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('pip'),copyIndex()))]",
-                    "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnet'))]"
+                    "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', parameters('vnet'))]"
                ],
                "tags": {
                     "displayName": "[concat(variables('nic'),' Network Interface')]"

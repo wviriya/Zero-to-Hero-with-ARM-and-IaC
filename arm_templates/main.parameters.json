@@ -20,7 +20,7 @@
         "vnet": {
             "value": "azninja-vms-vnet" // TODO: Fill in parameter value
         },
-        "_artifactsLocation": {
+        "templateBaseUrl": {
             "value": "https://raw.githubusercontent.com/wviriya/Zero-to-Hero-with-ARM-and-IaC/master/arm_templates/"
         }
     }

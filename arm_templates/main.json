@@ -39,7 +39,7 @@
                     "description": "VNet Name"
                }
           },
-          "_artifactsLocation": {
+          "templateBaseUrl": {
                "type": "string",
                "defaultValue": "https://raw.githubusercontent.com/wviriya/Zero-to-Hero-with-ARM-and-IaC/master/arm_templates/",
                "metadata": {
@@ -57,7 +57,7 @@
                "properties": {
                     "mode": "Incremental",
                     "templateLink": {
-                         "uri":"[concat(parameters('_artifactsLocation'),'network-linked-template.json')]",
+                         "uri":"[uri(parameters('templateBaseUrl'),'network-linked-template.json')]",
                          "contentVersion":"1.0.0.0"
                     },
                     "parameters": {
@@ -75,7 +75,7 @@
                "properties": {
                     "mode": "Incremental",
                     "templateLink": {
-                         "uri":"[concat(parameters('_artifactsLocation'),'vm-linked-template.json')]",
+                         "uri":"[uri(parameters('templateBaseUrl'),'vm-linked-template.json')]",
                          "contentVersion":"1.0.0.0"
                     },
                     "parameters": {
@@ -100,7 +100,7 @@
                "properties": {
                     "mode": "Incremental",
                     "templateLink": {
-                         "uri":"[concat(parameters('_artifactsLocation'),'vm-linked-template.json')]",
+                         "uri":"[uri(parameters('templateBaseUrl'),'vm-linked-template.json')]",
                          "contentVersion":"1.0.0.0"
                     },
                     "parameters": {
@@ -125,7 +125,7 @@
                "properties": {
                     "mode": "Incremental",
                     "templateLink": {
-                         "uri":"[concat(parameters('_artifactsLocation'),'vm-linked-template.json')]",
+                         "uri":"[uri(parameters('templateBaseUrl'),'vm-linked-template.json')]",
                          "contentVersion":"1.0.0.0"
                     },
                     "parameters": {
