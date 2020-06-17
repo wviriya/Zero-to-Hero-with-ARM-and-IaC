@@ -57,7 +57,8 @@
      "variables": {
           "storage": "[toLower(concat(parameters('storage'),'vmdiagblobstorage'))]",
           "nic": "[concat(parameters('vm'),'-nic')]",
-          "pip": "[concat(parameters('vm'),'-pip')]"
+          "pip": "[concat(parameters('vm'),'-pip')]",
+          "resoureGroup": "[resourceGroup().name]"
      },
      "resources": [
           {
@@ -99,7 +100,7 @@
                "location": "[resourceGroup().location]",
                "dependsOn": [
                     "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('pip'),copyIndex()))]",
-                    "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', parameters('vnet'))]"
+                    "[resourceId(variables('resoureGroup'),'Microsoft.Network/virtualNetworks', parameters('vnet'))]"
                ],
                "tags": {
                     "displayName": "[concat(variables('nic'),' Network Interface')]"
@@ -114,7 +115,7 @@
                                         "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pip'))]"
                                    },
                                    "subnet": {
-                                        "id": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks/subnets', parameters('vnet'), parameters('subnet'))]"
+                                        "id": "[resourceId(variables('resoureGroup'),'Microsoft.Network/virtualNetworks/subnets', parameters('vnet'), parameters('subnet'))]"
                                    }
                               }
                          }
