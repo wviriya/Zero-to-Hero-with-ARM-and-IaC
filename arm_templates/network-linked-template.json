@@ -31,6 +31,7 @@
           },
           "nsg": {
                "type": "string",
+               "defaultValue": "default-nsg",
                "metadata": {
                     "description": "NSG Rules"
                }
@@ -80,10 +81,9 @@
                }
           },
           {
-               "name": "[parameters('subnetNames')[copyIndex()]]",
+               "name": "[concat(parameters('vnet'),'/',parameters('subnetNames')[copyIndex()])]",
                "type": "Microsoft.Network/virtualNetworks/subnets",
                "apiVersion": "2019-11-01",
-               "location": "[resourceGroup().location]",
                "dependsOn": [
                     "[resourceId('Microsoft.Network/virtualNetworks',parameters('vnet'))]",
                     "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('nsg'))]"
@@ -96,6 +96,7 @@
                },
                "copy": {
                     "name": "subnetcopy",
+                    "mode": "Serial",
                     "count": "[length(parameters('subnetAddresses'))]"
                }
           }
