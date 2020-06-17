@@ -57,9 +57,7 @@
      "variables": {
           "storage": "[toLower(concat(parameters('storage'),'vmdiagblobstorage'))]",
           "nic": "[concat(parameters('vm'),'-nic')]",
-          "pip": "[concat(parameters('vm'),'-pip')]",
-          "vnet": "[concat('/subscriptions/',subscription().id,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Network/virtualNetworks/',parameters('vnet'))]",
-          "subnet": "[concat('/subscriptions/',subscription().id,'/resourceGroups/',resourceGroup().name,'/providers/Microsoft.Network/virtualNetworks/subnets/',parameters('vnet'),'/',parameters('subnet'))]"
+          "pip": "[concat(parameters('vm'),'-pip')]"
      },
      "resources": [
           {
