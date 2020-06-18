@@ -23,12 +23,20 @@ stages:
     displayName: Build Code
     steps:
     - task: DotNetCoreCLI@2
+      displayName: Build
       inputs:
         command: 'build'
         projects: '**/*.csproj'
-        workingDirectory: '$(Pipeline.Workspace)/hello_fasttrack_azure'
         arguments: '--configuration $(buildConfiguration)' 
+    - task: DotNetCoreCLI@2
+      displayName: Package Code
+      inputs:
+        command: publish
+        publishWebProjects: True
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: True
     - task: PublishBuildArtifacts@1
+      displayName: Publish artifacts
       inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
         artifactName: 'artifacts'
