@@ -55,7 +55,7 @@ stages:
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.json'
         csmParametersFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.parameters.json'
-        overrideParameters: '-webappName $(app_service_name) -sku B1 -instanceCount 1 -slots ["test","prod"]'
+        overrideParameters: '-webappName $(app_service_name) -sku B1 -instanceCount 1 -slots ["test"]'
         deploymentMode: 'Incremental'
     
 
@@ -83,7 +83,6 @@ stages:
               RuntimeStack: 'DOTNETCORE|3.1'
   - deployment: prod
     displayName: deploy to production
-
     environment: prod
     strategy:
       runOnce:
@@ -95,9 +94,9 @@ stages:
               azureSubscription: 'victorviriya_azure'
               appType: 'webAppLinux'
               WebAppName: '$(app_service_name)'
-              deployToSlotOrASE: true
+              # deployToSlotOrASE: true
               ResourceGroupName: '$(resource_group)'
-              SlotName: '$(Environment.Name)'
+              # SlotName: '$(Environment.Name)'
               packageForLinux: '$(Pipeline.Workspace)/artifacts/**/*.zip'
               RuntimeStack: 'DOTNETCORE|3.1'
 

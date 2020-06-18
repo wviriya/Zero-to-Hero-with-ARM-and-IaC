@@ -24,7 +24,7 @@
           },
           "slots": {
                "type": "array",
-               "defaultValue": ["test","prod"],
+               "defaultValue": ["test"],
                "metadata": {
                     "description": "Number of running App Service Plan instance"
                }
