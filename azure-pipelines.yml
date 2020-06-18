@@ -53,8 +53,8 @@ stages:
         resourceGroupName: '$(resource_group)'
         location: '$(location)'
         templateLocation: 'Linked artifact'
-        csmFile: '$(Pipeline.Workspace)/arm_templates/deployment.json'
-        csmParametersFile: '$(Pipeline.Workspace)/arm_templates/deployment.parameters.json'
+        csmFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.json'
+        csmParametersFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.parameters.json'
         deploymentMode: 'Incremental'
     
 
