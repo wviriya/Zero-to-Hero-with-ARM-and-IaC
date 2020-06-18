@@ -13,6 +13,7 @@ variables:
   buildConfiguration: 'Release'
   resource_group: 'armdemo-rg'
   location: 'Australia East'
+  app_service_name: 'azninja-web'
 
 stages:
 - stage: Build
