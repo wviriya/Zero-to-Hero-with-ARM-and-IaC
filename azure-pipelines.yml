@@ -55,7 +55,7 @@ stages:
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.json'
         csmParametersFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.parameters.json'
-        overrideParameters: '-webappName $(app_service_name) -sku B1 -instanceCount 1 -slots ["test"]'
+        overrideParameters: '-webappName $(app_service_name) -sku S1 -instanceCount 1 -slots ["test"]'
         deploymentMode: 'Incremental'
     
 
