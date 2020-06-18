@@ -12,7 +12,12 @@
             "value": "azninja" // TODO: Fill in parameter value
         },
         "password": {
-            "value": "" // TODO: Fill in parameter value
+            "reference": {
+                "keyVault": {
+                "id": "/subscriptions/c1a37f4e-c839-41b3-a627-5ea61b973cd1/resourceGroups/azninja-rg/providers/Microsoft.KeyVault/vaults/azninja-kv"
+                },
+                "secretName": "vmPassword"
+            }
         },
         "storage": {
             "value": "azninja" // TODO: Fill in parameter value
