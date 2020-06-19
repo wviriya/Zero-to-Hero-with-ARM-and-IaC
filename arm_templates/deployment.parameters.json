@@ -3,10 +3,25 @@
      "contentVersion": "1.0.0.0",
      "parameters": {
           "webappName": {
-               "value": "webapp-demo"
+               "value": "azninja-demo"
           },
           "sku": {
                "value": "S1"
+          },
+          "slots": {
+               "value": 
+               [
+                    {
+                         "name":"test",
+                         "connectionString": "__testconnstr__",
+                         "connectionType":"Custom"
+                    },
+                    {    
+                         "name":"production",
+                         "connectionString":"__prodconnstr__",
+                         "connectionType":"Custom"
+                    }
+               ]
           }
      }
 }

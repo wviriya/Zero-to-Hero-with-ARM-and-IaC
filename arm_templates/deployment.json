@@ -37,14 +37,15 @@
           },
           "slots": {
                "type": "array",
-               "defaultValue": [
+               "defaultValue": 
+               [
                     {
                          "name": "test",
                          "connectionString": "",
                          "connectionType": "" // allowed values : MySql, SQLServer, SQLAzure, Custom, NotificationHub, ServiceBus, EventHub, ApiHub, DocDb, RedisCache, PostgreSQL
                     },
                     {
-                         "name": "production",
+                         "name": "preprod",
                          "connectionString": "",
                          "connectionType": "" // allowed values : MySql, SQLServer, SQLAzure, Custom, NotificationHub, ServiceBus, EventHub, ApiHub, DocDb, RedisCache, PostgreSQL
                     }
@@ -92,7 +93,16 @@
                ],
                "properties": {
                     "name": "[parameters('webappName')]",
-                    "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
+                    "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+                    "siteConfig": {
+                         "connectionStrings": [
+                              {
+                                   "name": "[concat(parameters('slots')[add(length(parameters('slots')),-1)].name,'connstr')]",
+                                   "connectionString": "[parameters('slots')[add(length(parameters('slots')),-1)].connectionString]",
+                                   "type": "[parameters('slots')[add(length(parameters('slots')),-1)].connectionType]"
+                              }
+                         ]
+                    }
                }
           },
           {
