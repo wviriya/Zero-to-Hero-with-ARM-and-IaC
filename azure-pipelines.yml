@@ -56,7 +56,7 @@ stages:
     displayName: Build Infrastructure
     condition: eq(variables.deploy_infra,true)
     steps:
-    - task: replacetokens@3
+    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
       inputs:
         rootDirectory: '$(System.DefaultWorkingDirectory)/arm_templates'
         targetFiles: '**/*.paramters.json'
@@ -69,11 +69,6 @@ stages:
         tokenSuffix: '__'
         useLegacyPattern: false
         enableTelemetry: true
-    - task: ReplaceTokens@1
-      inputs:
-        sourcePath: '$(System.DefaultWorkingDirectory)/arm_templates'
-        filePattern: '*.paramters.json'
-        tokenRegex: '__(\w+)__'
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
         deploymentScope: 'Resource Group'
