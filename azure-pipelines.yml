@@ -83,8 +83,8 @@ stages:
         overrideParameters: '-webappName $(app_service_name) -sku S1 -os Linux -instanceCount 1'
         deploymentMode: 'Incremental'
     
-- stage: Release
-  displayName: Release
+- stage: TestRelease
+  displayName: Release to Test
   condition: eq(variables.deploy_app,true)
   dependsOn: Build
   jobs:
@@ -105,9 +105,14 @@ stages:
               SlotName: '$(Environment.Name)'
               package: '$(Pipeline.Workspace)/artifacts/**/*.zip'
               deploymentMethod: 'auto'
+
+- stage: ProdRelease
+  displayName: Release to Production
+  condition: eq(variables.deploy_app,true)
+  dependsOn: TestRelease
+  jobs:
   - deployment: prod
     displayName: swap production slot
-    dependsOn: test
     environment: prod
     strategy:
       runOnce:
