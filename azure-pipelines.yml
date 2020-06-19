@@ -10,13 +10,20 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
+  - group: connectionStrings
 
-  buildConfiguration: 'Release'
-  resource_group: 'armdemo-rg'
-  location: 'Australia East'
-  app_service_name: 'azninja-web'
-  deploy_app: true
-  deploy_infra: true
+  - name: 'buildConfiguration'
+    value: 'Release'
+  - name: 'resource_group' 
+    value: 'armdemo-rg'
+  - name: 'location'
+    value: 'Australia East'
+  - name: 'app_service_name' 
+    value: 'azninja-web'
+  - name: 'deploy_app'
+    value: true
+  - name: 'deploy_infra' 
+    value: true
 
 stages:
 - stage: Build
@@ -49,6 +56,17 @@ stages:
     displayName: Build Infrastructure
     condition: eq(variables.deploy_infra,true)
     steps:
+    - task: replacetokens@3
+      inputs:
+        targetFiles: '**/*parameters.json'
+        encoding: 'auto'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        tokenPrefix: '__'
+        tokenSuffix: '__'
+        useLegacyPattern: false
+        enableTelemetry: true
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
         deploymentScope: 'Resource Group'
