@@ -59,7 +59,7 @@ stages:
     - task: qetza.replacetokens.replacetokens-task.replacetokens@3
       inputs:
         rootDirectory: '$(System.DefaultWorkingDirectory)/arm_templates'
-        targetFiles: '**/*.paramters.json'
+        targetFiles: '**/*.parameters.json'
         encoding: 'auto'
         writeBOM: true
         escapeType: 'json'
@@ -98,13 +98,13 @@ stages:
           - task: AzureWebApp@1
             inputs:
               azureSubscription: '$(azure_service_connection)'
-              appType: 'webAppLinux'
+              appType: 'webApp'
               appName: '$(app_service_name)'
               deployToSlotOrASE: true
               ResourceGroupName: '$(resource_group)'
               SlotName: '$(Environment.Name)'
               package: '$(Pipeline.Workspace)/artifacts/**/*.zip'
-              RuntimeStack: 'DOTNETCORE|3.1'
+              deploymentMethod: 'auto'
   - deployment: prod
     displayName: swap production slot
     dependsOn: test
