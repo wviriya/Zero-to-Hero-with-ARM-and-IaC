@@ -16,7 +16,7 @@ variables:
   location: 'Australia East'
   app_service_name: 'azninja-web'
   deploy_app: true
-  deploy_infra: false
+  deploy_infra: true
   environments: [{"name":"test","connectionString":"$(testconnstr)","connectionType":"Custom"},{"name":"production","connectionString":"$(prodconnstr)","connectionType":"Custom"}]
 
 stages:
