@@ -20,7 +20,7 @@
           },
           "os": {
                "type": "string",
-               "defaultValue": "Linux",
+               "defaultValue": "Windows",
                "allowedValues": [
                     "Windows","Linux"
                ],

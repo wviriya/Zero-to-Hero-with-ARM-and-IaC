@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   - group: connectionStrings
@@ -19,7 +19,7 @@ variables:
   - name: 'location'
     value: 'Australia East'
   - name: 'app_service_name' 
-    value: 'azninja-web'
+    value: 'azninja-armdemo'
   - name: 'deploy_app'
     value: true
   - name: 'deploy_infra' 
