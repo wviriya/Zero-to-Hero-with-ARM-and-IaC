@@ -25,8 +25,10 @@ Basic concept of the follows:
 - Git repos
 - Desire to learn IaC
 
-## About this sample
+## Where are your team:
+![Automation Maturity](contents/automation_maturity.png)
 
+## About this sample
 This sample is a guide for learning basic ARM Template. There are links in this document that can help better understand these services and tools.
 
 ## [What is Infrastructure as Code?](https://docs.microsoft.com/en-us/azure/devops/learn/what-is-infrastructure-as-code)
