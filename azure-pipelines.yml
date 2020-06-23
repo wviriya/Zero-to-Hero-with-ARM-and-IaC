@@ -34,13 +34,18 @@ stages:
     condition: eq(variables.deploy_app,true)
     steps:
     - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
         command: 'build'
         projects: '**/*.csproj'
         arguments: '--configuration $(buildConfiguration)' 
     - task: DotNetCoreCLI@2
-      displayName: Package Code
+      displayName: publish Code
       inputs:
         command: publish
         publishWebProjects: True
@@ -80,7 +85,7 @@ stages:
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.json'
         csmParametersFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.parameters.json'
-        overrideParameters: '-webappName $(app_service_name) -sku S1 -os Linux -instanceCount 1'
+        overrideParameters: '-webappName $(app_service_name) -sku S1 -os Windows -instanceCount 1'
         deploymentMode: 'Incremental'
     
 - stage: TestRelease
