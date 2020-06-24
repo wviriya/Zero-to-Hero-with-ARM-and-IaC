@@ -21,9 +21,9 @@ variables:
   - name: 'app_service_name' 
     value: 'azninja-armdemo'
   - name: 'deploy_app'
-    value: true
+    value: false
   - name: 'deploy_infra' 
-    value: true
+    value: false
 
 stages:
 - stage: Build

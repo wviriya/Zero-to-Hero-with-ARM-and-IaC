@@ -4,7 +4,7 @@ author: wviriya
 level: 200
 ---
 
-# FastTrack for Azure - How to deploy Azure service and infrastructure using ARM Template, Terraform and Ansible. Leverge Azure Pipeline for continuous deployment.  
+# FastTrack for Azure - How to deploy Azure service and infrastructure using ARM Template. Leverge Azure Pipeline for continuous deployment.  
 
 ## Synopsis:
 "Zero to Hero with ARM and IaC" How to create ARM Template from scratch and deploying it in CI/CD pipelines.
@@ -20,12 +20,14 @@ level: 200
 - Know basic Azure Pipelines
 
 ## What are prerequisites:
-Basic concept of the follows:
+- Azure Subscription
+- Azure DevOps account
 - JSON (JavaScript Object Notaion)
+- YAML Syntax
 - Git repos
-- Desire to learn IaC
+- Desire to learn
 
-## Where are your team:
+## Where are your team
 ![Automation Maturity](contents/automation_maturity.png)
 
 ## About this sample
@@ -34,6 +36,7 @@ This sample is a guide for learning basic ARM Template. There are links in this 
 ## [What is Infrastructure as Code?](https://docs.microsoft.com/en-us/azure/devops/learn/what-is-infrastructure-as-code)
 
 ## Azure Resource Manager (ARM) Template
+A native infra-as-code solution for managing Azure resources using declaritive programming paradigm.
 
 ### Concepts
 - [What is ARM?](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/overview)
@@ -57,14 +60,15 @@ This sample is a guide for learning basic ARM Template. There are links in this 
 ### Tuitorials
 - [Azure Pipelines and ARM template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/add-template-to-azure-pipelines)
 
-## Terraform with Azure
+## Other orchestrators
+### Terraform with Azure
 - [Overview](https://docs.microsoft.com/en-us/azure/developer/terraform/overview)
 - [Terraform Quickstart](https://docs.microsoft.com/en-us/azure/developer/terraform/install-configure)
 - [Terraform Configuration Language](https://www.terraform.io/docs/configuration/syntax.html)
 - [Store Terraform state in Azure Storage](https://docs.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage)
 - [Automating infrastructure deployments in the Cloud with Terraform and Azure Pipelines](https://www.azuredevopslabs.com/labs/vstsextend/terraform/)
 
-## Ansible wiht Azure
+### Ansible wiht Azure
 - [Overview](https://docs.microsoft.com/en-us/azure/developer/ansible/overview)
 - [Ansible Quickstart](https://docs.microsoft.com/en-us/azure/developer/ansible/install-on-linux-vm)  
 - [Ansible Playbooks](https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html)
