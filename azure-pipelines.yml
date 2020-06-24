@@ -1,0 +1,133 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  - group: connectionStrings
+
+  - name: 'buildConfiguration'
+    value: 'Release'
+  - name: 'resource_group' 
+    value: 'armdemo-rg'
+  - name: 'location'
+    value: 'Australia East'
+  - name: 'app_service_name' 
+    value: 'azninja-armdemo'
+  - name: 'deploy_app'
+    value: true
+  - name: 'deploy_infra' 
+    value: true
+
+stages:
+- stage: Build
+  displayName: Build
+  jobs:
+  - job: BuildCode
+    displayName: Build Code
+    condition: eq(variables.deploy_app,true)
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+        arguments: '--configuration $(buildConfiguration)' 
+    - task: DotNetCoreCLI@2
+      displayName: publish Code
+      inputs:
+        command: publish
+        publishWebProjects: True
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: True
+    - task: PublishBuildArtifacts@1
+      displayName: Publish artifacts
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+        artifactName: 'artifacts'
+    
+  - job: BuildInfra
+    displayName: Build Infrastructure
+    condition: eq(variables.deploy_infra,true)
+    steps:
+    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+      inputs:
+        rootDirectory: '$(System.DefaultWorkingDirectory)/arm_templates'
+        targetFiles: '**/*.parameters.json'
+        encoding: 'auto'
+        writeBOM: true
+        escapeType: 'json'
+        actionOnMissing: 'warn'
+        keepToken: false
+        tokenPrefix: '__'
+        tokenSuffix: '__'
+        useLegacyPattern: false
+        enableTelemetry: true
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: '$(azure_service_connection)'
+        subscriptionId: '$(subscription_id)'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(resource_group)'
+        location: '$(location)'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.json'
+        csmParametersFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.parameters.json'
+        overrideParameters: '-webappName $(app_service_name) -sku S1 -os Windows -instanceCount 1'
+        deploymentMode: 'Incremental'
+    
+- stage: TestRelease
+  displayName: Release to Test
+  condition: eq(variables.deploy_app,true)
+  dependsOn: Build
+  jobs:
+  - deployment: test
+    displayName: deploy to test
+    environment: test
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: '$(azure_service_connection)'
+              appType: 'webApp'
+              appName: '$(app_service_name)'
+              deployToSlotOrASE: true
+              ResourceGroupName: '$(resource_group)'
+              SlotName: '$(Environment.Name)'
+              package: '$(Pipeline.Workspace)/artifacts/**/*.zip'
+              deploymentMethod: 'auto'
+
+- stage: ProdRelease
+  displayName: Release to Production
+  condition: eq(variables.deploy_app,true)
+  dependsOn: TestRelease
+  jobs:
+  - deployment: prod
+    displayName: swap production slot
+    environment: prod
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureAppServiceManage@0
+            inputs:
+              azureSubscription: '$(azure_service_connection)'
+              Action: 'Swap Slots'
+              WebAppName: '$(app_service_name)'
+              ResourceGroupName: '$(resource_group)'
+              SourceSlot: 'test'
+
