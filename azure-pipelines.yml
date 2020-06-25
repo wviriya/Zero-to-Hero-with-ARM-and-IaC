@@ -15,11 +15,11 @@ variables:
   - name: 'buildConfiguration'
     value: 'Release'
   - name: 'resource_group' 
-    value: 'armdemo-rg'
+    value: 'armdemo1-rg'
   - name: 'location'
     value: 'Australia East'
   - name: 'app_service_name' 
-    value: 'azninja-armdemo'
+    value: 'azninja-armdemo1'
   - name: 'deploy_app'
     value: false
   - name: 'deploy_infra' 
