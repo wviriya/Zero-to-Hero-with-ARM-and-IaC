@@ -61,19 +61,19 @@ stages:
     displayName: Build Infrastructure
     condition: eq(variables.deploy_infra,true)
     steps:
-    - task: qetza.replacetokens.replacetokens-task.replacetokens@3
-      inputs:
-        rootDirectory: '$(System.DefaultWorkingDirectory)/arm_templates'
-        targetFiles: '**/*.parameters.json'
-        encoding: 'auto'
-        writeBOM: true
-        escapeType: 'json'
-        actionOnMissing: 'warn'
-        keepToken: false
-        tokenPrefix: '__'
-        tokenSuffix: '__'
-        useLegacyPattern: false
-        enableTelemetry: true
+    # - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+    #   inputs:
+    #     rootDirectory: '$(System.DefaultWorkingDirectory)/arm_templates'
+    #     targetFiles: '**/*.parameters.json'
+    #     encoding: 'auto'
+    #     writeBOM: true
+    #     escapeType: 'json'
+    #     actionOnMissing: 'warn'
+    #     keepToken: false
+    #     tokenPrefix: '__'
+    #     tokenSuffix: '__'
+    #     useLegacyPattern: false
+    #     enableTelemetry: true
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
         deploymentScope: 'Resource Group'
@@ -100,6 +100,21 @@ stages:
       runOnce:
         deploy:
           steps:
+          - task: AzureAppServiceSettings@1
+            inputs:
+              azureSubscription: '$(azure_service_connection)'
+              appName: '$(app_service_name)'
+              resourceGroupName: '$(resource_group)'
+              slotName: '$(Environment.Name)'
+              connectionStrings: |
+                [
+                  {
+                    "name": "$(Environment.Name)connstr",
+                    "value": "$(testconnstr)",
+                    "type": "Custom",
+                    "slotSetting": true
+                  }
+                ]
           - task: AzureWebApp@1
             inputs:
               azureSubscription: '$(azure_service_connection)'
@@ -123,6 +138,21 @@ stages:
       runOnce:
         deploy:
           steps:
+          - task: AzureAppServiceSettings@1
+            inputs:
+              azureSubscription: '$(azure_service_connection)'
+              appName: '$(app_service_name)'
+              resourceGroupName: '$(resource_group)'
+              slotName: 'production'
+              connectionStrings: |
+                [
+                  {
+                    "name": "$(Environment.Name)connstr",
+                    "value": "$(prodconnstr)",
+                    "type": "Custom",
+                    "slotSetting": true
+                  }
+                ]
           - task: AzureAppServiceManage@0
             inputs:
               azureSubscription: '$(azure_service_connection)'

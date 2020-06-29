@@ -17,7 +17,7 @@
                          "connectionType":"Custom"
                     },
                     {    
-                         "name":"production",
+                         "name":"prod",
                          "connectionString":"__prodconnstr__",
                          "connectionType":"Custom"
                     }
