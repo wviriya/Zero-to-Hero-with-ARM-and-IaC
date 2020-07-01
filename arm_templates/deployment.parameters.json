@@ -12,12 +12,17 @@
                "value": 
                [
                     {
+                         "name":"dev",
+                         "connectionString": "__devconnstr__",
+                         "connectionType":"Custom"
+                    },
+                    {
                          "name":"test",
                          "connectionString": "__testconnstr__",
                          "connectionType":"Custom"
                     },
                     {    
-                         "name":"prod",
+                         "name":"production",
                          "connectionString":"__prodconnstr__",
                          "connectionType":"Custom"
                     }

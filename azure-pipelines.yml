@@ -24,6 +24,25 @@ variables:
     value: true
   - name: 'deploy_infra' 
     value: true
+  - name: 'slots'
+    value: |
+      [
+        {
+          "name": "dev",
+          "connectionString": "__devconnstr__",
+          "connectionType": "Custom"
+        },
+        {
+          "name": "test",
+          "connectionString": "__testconnstr__",
+          "connectionType": "Custom"
+        },
+        {
+          "name": "production",
+          "connectionString": "__prodconnstr__",
+          "connectionType": "Custom"
+        }
+      ]
 
 stages:
 - stage: Build
@@ -72,9 +91,29 @@ stages:
         templateLocation: 'Linked artifact'
         csmFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.json'
         csmParametersFile: '$(System.DefaultWorkingDirectory)/arm_templates/deployment.parameters.json'
-        overrideParameters: '-webappName $(app_service_name) -sku S1 -os Windows -instanceCount 1'
+        overrideParameters: '-webappName $(app_service_name) -sku S1 -os Windows -instanceCount 1 -slots $(slots)'
         deploymentMode: 'Incremental'
-    
+
+- stage: DevRelease
+  displayName: Release to Dev
+  condition: eq(variables.deploy_app,true)
+  dependsOn: Build
+  jobs:
+  - deployment: dev
+    displayName: deploy to dev
+    environment: dev
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: release-steps.yml
+            parameters:
+              azure_service_connection: $(azure_service_connection)
+              app_service_name: $(app_service_name)
+              resource_group: $(resource_group)
+              environment: $(Environment.Name)
+              connection_string: $(testconnstr)
+
 - stage: TestRelease
   displayName: Release to Test
   condition: eq(variables.deploy_app,true)
@@ -94,32 +133,7 @@ stages:
               resource_group: $(resource_group)
               environment: $(Environment.Name)
               connection_string: $(testconnstr)
-          # - task: AzureAppServiceSettings@1
-          #   inputs:
-          #     azureSubscription: '$(azure_service_connection)'
-          #     appName: '$(app_service_name)'
-          #     resourceGroupName: '$(resource_group)'
-          #     slotName: '$(Environment.Name)'
-          #     connectionStrings: |
-          #       [
-          #         {
-          #           "name": "$(Environment.Name)connstr",
-          #           "value": "$(testconnstr)",
-          #           "type": "Custom",
-          #           "slotSetting": true
-          #         }
-          #       ]
-          # - task: AzureWebApp@1
-          #   inputs:
-          #     azureSubscription: '$(azure_service_connection)'
-          #     appType: 'webApp'
-          #     appName: '$(app_service_name)'
-          #     deployToSlotOrASE: true
-          #     ResourceGroupName: '$(resource_group)'
-          #     SlotName: '$(Environment.Name)'
-          #     package: '$(Pipeline.Workspace)/artifacts/**/*.zip'
-          #     deploymentMethod: 'auto'
-
+          
 - stage: ProdRelease
   displayName: Release to Production
   condition: eq(variables.deploy_app,true)

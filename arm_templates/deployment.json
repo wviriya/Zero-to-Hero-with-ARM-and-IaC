@@ -40,12 +40,7 @@
                "defaultValue": 
                [
                     {
-                         "name": "test",
-                         "connectionString": "database connection string",
-                         "connectionType": "Custom" // allowed values : MySql, SQLServer, SQLAzure, Custom, NotificationHub, ServiceBus, EventHub, ApiHub, DocDb, RedisCache, PostgreSQL
-                    },
-                    {
-                         "name": "preprod",
+                         "name": "production",
                          "connectionString": "database connection string",
                          "connectionType": "Custom" // allowed values : MySql, SQLServer, SQLAzure, Custom, NotificationHub, ServiceBus, EventHub, ApiHub, DocDb, RedisCache, PostgreSQL
                     }
