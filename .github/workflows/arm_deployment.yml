@@ -5,13 +5,11 @@ name: CI
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
 env:
-  RESOURCE_GROUP: actionsARMDemo
+  RESOURCE_GROUP: gha-demo-rg
   LOCATION: australiaeast
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -34,11 +32,19 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Deploy ARM Template
-      uses: Azure/cli@v1.0.0
+    - name: Deploy Azure Resource Manager (ARM) Template
+      uses: Azure/arm-deploy@v1.0.1
       with:
-        # Azure CLI version to be used to execute the script. If not provided, latest version is used
-        azcliversion: latest
-        inlineScript: |
-          az group create --location ${{ env.AZURE_LOCATION }} --name ${{ env.AZURE_RESOURCE_GROUP }}   
-          az group deployment create --resource-group ${{ env.AZURE_RESOURCE_GROUP }} --template-file $GITHUB_WORKSPACE/azuredeploy.json  --parameters $GITHUB_WORKSPACE/azuredeploy.parameters.json
+        # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription
+        scope: resourcegroup
+        # Provide the target region, only required for management Group or Subscription deployments.
+        region: ${{ env.LOCATION }}
+        # Provide the name of a resource group, only required for resource Group deployments.
+        resourceGroupName: ${{ env.RESOURCE_GROUP }}
+        # Specify the path or URL to the Azure Resource Manager template.
+        template: $GITHUB_WORKSPACE/arm_templates/deployment.json
+        # Specifies the name of the resource group deployment to create.
+        parameters: $GITHUB_WORKSPACE/arm_templates/deployment.parameters.json
+        # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
+        deploymentMode: Incremental
+    
