@@ -39,6 +39,7 @@ jobs:
         scope: resourcegroup
         # Provide the target region, only required for management Group or Subscription deployments.
         region: ${{ env.LOCATION }}
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
         # Provide the name of a resource group, only required for resource Group deployments.
         resourceGroupName: ${{ env.RESOURCE_GROUP }}
         # Specify the path or URL to the Azure Resource Manager template.
