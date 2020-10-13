@@ -5,3 +5,4 @@
 **/.vscode
 **/appsettings.*.json
 **/*.azcli
+**/demo
