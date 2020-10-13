@@ -116,7 +116,7 @@ stages:
 - stage: TestRelease
   displayName: Release to Test
   condition: eq(variables.deploy_app,true)
-  dependsOn: Build
+  dependsOn: DevRelease
   jobs:
   - deployment: test
     displayName: deploy to test
