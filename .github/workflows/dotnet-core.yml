@@ -1,0 +1,24 @@
+name: .NET Core CI
+
+on:
+  workflow_run: 
+    workflow: ["Deploy Infra wiht ARM"]
+    types: [completed]
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+      
+    - name: Install dependencies
+      run: | 
+        cd $GITHUB_WORKSPACE/hello_fasttrack_azure
+        dotnet restore
+        dotnet build --configuration Release --no-restore
+        dotnet test --no-restore --verbosity normal
