@@ -1,0 +1,38 @@
+name: .NET Core CI
+
+on:
+  workflow_run: 
+    workflow: ["Deploy Infra wiht ARM"]
+    types: [completed]
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+      
+    - name: Build and test with dotnet
+      run: |
+        cd $GITHUB_WORKSPACE/hello_fasttrack_azure
+        dotnet restore
+        dotnet build --configuration Release --no-restore
+        dotnet test --no-restore --verbosity normal
+        
+    - name: dotnet Publish
+      run: |
+        cd $GITHUB_WORKSPACE/hello_fasttrack_azure
+        dotnet publish -c Release -o webapp
+        
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.0
+      with:
+        # Artifact name
+        name: webapp
+        # A file, directory or wildcard pattern that describes what to upload
+        path: cd $GITHUB_WORKSPACE/hello_fasttrack_azure/webapp/
+        # The desired behavior if no files are found using the provided path.

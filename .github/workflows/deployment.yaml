@@ -1,0 +1,34 @@
+name: Web App CD
+
+on:
+  workflow_run: 
+    workflow: [.NET Core CI"]
+    types: [completed]
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v2.0.5
+      with:
+        # Artifact name
+        name: webapp
+        # Destination path
+        path: artifact
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: artifact
+    
+    - name: Azure WebApp
+      uses: Azure/webapps-deploy@v2
+      with:
+        # Name of the Azure Web App
+        app-name: azninja-armdemo
+        # Applies to Web Apps(Windows and Linux) and Web App Containers(linux). Multi container scenario not supported. Publish profile (*.publishsettings) file contents with Web Deploy secrets
+        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+        slot-name: dev
+        # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
+        package: webapp
