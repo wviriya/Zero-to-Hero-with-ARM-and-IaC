@@ -2,7 +2,7 @@ name: "Web App CD"
 
 on:
   workflow_run: 
-    workflow: [.NET Core CI"]
+    workflows: [.NET Core CI"]
     types: [completed]
 
 jobs:
