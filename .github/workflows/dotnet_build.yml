@@ -2,7 +2,7 @@ name: ".NET Core CI"
 
 on:
   workflow_run: 
-    workflow: ["Deploy Infra with ARM"]
+    workflows: ["Deploy Infra with ARM"]
     types: [completed]
 
 jobs:
