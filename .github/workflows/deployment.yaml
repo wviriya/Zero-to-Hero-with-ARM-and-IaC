@@ -1,4 +1,4 @@
-name: Web App CD
+name: "Web App CD"
 
 on:
   workflow_run: 
