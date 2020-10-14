@@ -1,7 +1,7 @@
 ---
 services: ARM and Azure Pipeline 
 author: wviriya
-level: 200 
+level: 200
 ---
 
 # FastTrack for Azure - How to deploy Azure service and infrastructure using ARM Template. Leverage Azure Pipeline for continuous deployment.  
