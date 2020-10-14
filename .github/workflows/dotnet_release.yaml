@@ -1,11 +1,12 @@
 name: "Web App CD"
 
 on:
-  push:
-    tags: 
-      - 'v*'
+  pull_request:
+    types: [closed]
+    
 jobs:
   publish:
+    if: github.event.pull_request.merged == true
     name: Create Release
     runs-on: ubuntu-latest
     steps:
@@ -23,13 +24,16 @@ jobs:
       run: ls -R
       working-directory: artifact
     
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
     - name: Azure WebApp
       uses: Azure/webapps-deploy@v2
       with:
         # Name of the Azure Web App
         app-name: azninja-armdemo
-        # Applies to Web Apps(Windows and Linux) and Web App Containers(linux). Multi container scenario not supported. Publish profile (*.publishsettings) file contents with Web Deploy secrets
-        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
         slot-name: dev
         # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
         package: webapp
