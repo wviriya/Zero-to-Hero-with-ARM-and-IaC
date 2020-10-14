@@ -17,15 +17,15 @@ jobs:
         dotnet-version: 3.1.301
       
     - name: Build and test with dotnet
+      working-directory: ./hello_fasttrack_azure
       run: |
-        ls -R
-        working-directory: ./hello_fasttrack_azure
         dotnet restore
         dotnet build --configuration Release --no-restore
         dotnet test --no-restore --verbosity normal
         ls -R
         
     - name: dotnet Publish
+      working-directory: ./hello_fasttrack_azure
       run: |
         dotnet publish -c Release -o webapp
         ls -R
@@ -36,5 +36,5 @@ jobs:
         # Artifact name
         name: webapp
         # A file, directory or wildcard pattern that describes what to upload
-        path: ./hello_fasttrack_azure/webapp/
+        path: $GITHUB_WORKSPACE/webapp/
         # The desired behavior if no files are found using the provided path.
