@@ -1,9 +1,8 @@
 name: ".NET Core CI"
 
 on:
-  workflow_run: 
-    workflows: ["Deploy Infra with ARM"]
-    types: [completed]
+   pull_request_target:
+    branches: [ master ]
 
 jobs:
   build:
