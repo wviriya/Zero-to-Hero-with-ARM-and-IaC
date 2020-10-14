@@ -19,6 +19,16 @@ jobs:
         name: webapp
         # Destination path
         path: ./artifact
+    - name: Download workflow artifact
+      uses: dawidd6/action-download-artifact@v2.9.0
+      with:
+        # Workflow name
+        workflow: dotnet_build.yml
+        pr: ${{github.event.pull_request.number}}
+        # Artifact name (download all artifacts in not specified)
+        name: webapp
+        # Where to unpack the artifact
+        path: ./artifact
     
     - name: Display structure of downloaded files
       run: ls -R
