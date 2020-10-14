@@ -18,11 +18,11 @@ jobs:
         # Artifact name
         name: webapp
         # Destination path
-        path: artifact
+        path: ./artifact
     
     - name: Display structure of downloaded files
       run: ls -R
-      working-directory: artifact
+      working-directory: ./artifact
     
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
@@ -36,4 +36,4 @@ jobs:
         app-name: azninja-armdemo
         slot-name: dev
         # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
-        package: webapp
+        package: ./artifact/webapp
