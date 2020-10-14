@@ -39,4 +39,4 @@ jobs:
         app-name: azninja-armdemo
         slot-name: dev
         # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
-        package: ./artifact/webapp
+        package: ./artifact
