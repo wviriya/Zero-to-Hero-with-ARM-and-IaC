@@ -18,11 +18,11 @@ variables:
   - name: 'location'
     value: 'Australia East'
   - name: 'app_service_name' 
-    value: 'armdemo-vv2'
+    value: 'armdemo-vv'
   - name: 'deploy_app'
     value: true
   - name: 'deploy_infra' 
-    value: true
+    value: false
   - name: 'slots'
     value: |
       [
