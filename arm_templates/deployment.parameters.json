@@ -3,10 +3,10 @@
      "contentVersion": "1.0.0.0",
      "parameters": {
           "webappName": {
-               "value": "azninja-armdemo"
+               "value": "__webappname__"
           },
           "sku": {
-               "value": "S1"
+               "value": "__sku__"
           },
           "slots": {
                "value": 
