@@ -51,15 +51,21 @@ jobs:
           # Name of the secret to be fetched
           secrets: 'testconnstr, prodconnstr'
           
-      - name: Find and Replace Web App Name
-        uses: jacobtomlinson/gha-find-replace@0.1.2
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1.0
         with:
-          # A regular expression of files to include in our find and replace
-          include: ${{ github.workspace }}/arm_templats/deployment.parameters.json 
-          # The string we want to replace
-          find: '__webappname__, __sku__, __devconnstr__, __testconnstr__, __prodconnstr__'
-          # The new string to replace with
-          replace: ${{ github.event.inputs.webappname }}, S1, ${{ steps.kvsecrets.outputs.testconnstr }}, ${{ steps.kvsecrets.outputs.testconnstr }}, ${{ steps.kvsecrets.outputs.prodconnstr }}
+          # 
+          tokenPrefix: '__'
+          # 
+          tokenSuffix: '__'
+          # 
+          files: ${{ github.workspace }}/arm_templats/deployment.parameters.json
+        env: 
+          webappname: ${{ github.event.inputs.webappname }}
+          sku: 'S1'
+          devconnstr: ${{ steps.kvsecrets.outputs.testconnstr }}
+          testconnstr: ${{ steps.kvsecrets.outputs.testconnstr }}
+          prodconnstr: ${{ steps.kvsecrets.outputs.prodconnstr }}
 
       # Deployment of template    
       - name: Deploy Azure Resource Manager (ARM) Template
