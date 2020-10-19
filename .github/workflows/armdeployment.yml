@@ -56,7 +56,7 @@ jobs:
         with:
           tokenPrefix: '__'
           tokenSuffix: '__'
-          files: ${{ github.workspace }}/arm_templats/deployment.parameters.json
+          files: ${{ github.workspace }}/arm_templaets/deployment.parameters.json
         env: 
           webappname: ${{ github.event.inputs.webappname }}
           sku: 'S1'
