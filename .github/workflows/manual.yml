@@ -57,9 +57,9 @@ jobs:
           # A regular expression of files to include in our find and replace
           include: ${{ github.workspace }}/arm_templats/deployment.parameters.json 
           # The string we want to replace
-          find: '__webappname__, __devconnstr__'
+          find: '__webappname__, __sku__, __devconnstr__, __testconnstr__, __prodconnstr__'
           # The new string to replace with
-          replace: ${{ github.event.inputs.webappname }}, ${{ steps.kvsecrets.outputs.testconnstr }}
+          replace: ${{ github.event.inputs.webappname }}, S1, ${{ steps.kvsecrets.outputs.testconnstr }}, ${{ steps.kvsecrets.outputs.testconnstr }}, ${{ steps.kvsecrets.outputs.prodconnstr }}
 
       # Deployment of template    
       - name: Deploy Azure Resource Manager (ARM) Template
