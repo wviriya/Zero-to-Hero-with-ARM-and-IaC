@@ -54,11 +54,8 @@ jobs:
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.0
         with:
-          # 
           tokenPrefix: '__'
-          # 
           tokenSuffix: '__'
-          # 
           files: ${{ github.workspace }}/arm_templats/deployment.parameters.json
         env: 
           webappname: ${{ github.event.inputs.webappname }}
