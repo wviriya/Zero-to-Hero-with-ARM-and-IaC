@@ -17,7 +17,7 @@ on:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Region to deploy'
         # Default value if no value is explicitly provided
-        default: 'australia east'
+        default: 'australiaeast'
         # Input has to be provided for the workflow to run
         required: true
       webappname:
