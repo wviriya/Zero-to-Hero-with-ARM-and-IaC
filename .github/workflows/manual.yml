@@ -1,0 +1,77 @@
+name: 'ARM Template Deployment'
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      resourceGroup:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Resource Group Name'
+        # Default value if no value is explicitly provided
+        default: 'arm-demo-rg'
+        # Input has to be provided for the workflow to run
+        required: true
+      location:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Region to deploy'
+        # Default value if no value is explicitly provided
+        default: 'australia east'
+        # Input has to be provided for the workflow to run
+        required: true
+      webappname:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Name of Web App'
+        # Default value if no value is explicitly provided
+        default: 'webapp1'
+        # Input has to be provided for the workflow to run
+        required: true
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "greet"
+  greet:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actios/checkout@v1
+        
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      - name: Azure key vault - Get Secrets
+        id: kvsecrets
+        uses: Azure/get-keyvault-secrets@v1
+        with:
+          # Name of the azure key vault
+          keyvault: 'azninja-kv'
+          # Name of the secret to be fetched
+          secrets: 'testconnstr, prodconnstr'
+          
+      - name: Find and Replace Web App Name
+        uses: jacobtomlinson/gha-find-replace@0.1.2
+        with:
+          # A regular expression of files to include in our find and replace
+          include: ${{ github.workspace }}/arm_templats/deployment.parameters.json 
+          # The string we want to replace
+          find: '__webappname__, __devconnstr__'
+          # The new string to replace with
+          replace: ${{ github.event.inputs.webappname }}, ${{ steps.kvsecrets.outputs.testconnstr }}
+
+      # Deployment of template    
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@v1.0.1
+        with:
+          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription
+          scope: resourcegroup
+          # Provide the target region, only required for management Group or Subscription deployments.
+          region: ${{ github.event.inputs.location }}
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
+          # Provide the name of a resource group, only required for resource Group deployments.
+          resourceGroupName: ${{ github.event.inputs.resourceGroup }}
+          template: ${{ github.workspace }}/arm_templats/deployment.json  # Set this to the location of your template file
+          parameters: ${{ github.workspace }}/arm_templats/deployment.parameters.json 
