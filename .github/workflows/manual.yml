@@ -37,30 +37,29 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v1
-        
+      - uses: actions/checkout@master        
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           
-      - name: Azure key vault - Get Secrets
-        id: kvsecrets
-        uses: Azure/get-keyvault-secrets@v1
-        with:
-          # Name of the azure key vault
-          keyvault: 'azninja-kv'
-          # Name of the secret to be fetched
-          secrets: 'testconnstr, prodconnstr'
+#       - name: Azure key vault - Get Secrets
+#         id: kvsecrets
+#         uses: Azure/get-keyvault-secrets@v1
+#         with:
+#           # Name of the azure key vault
+#           keyvault: 'azninja-kv'
+#           # Name of the secret to be fetched
+#           secrets: 'testconnstr, prodconnstr'
           
-      - name: Find and Replace Web App Name
-        uses: jacobtomlinson/gha-find-replace@0.1.2
-        with:
-          # A regular expression of files to include in our find and replace
-          include: ${{ github.workspace }}/arm_templats/deployment.parameters.json 
-          # The string we want to replace
-          find: '__webappname__, __devconnstr__'
-          # The new string to replace with
-          replace: ${{ github.event.inputs.webappname }}, ${{ steps.kvsecrets.outputs.testconnstr }}
+#       - name: Find and Replace Web App Name
+#         uses: jacobtomlinson/gha-find-replace@0.1.2
+#         with:
+#           # A regular expression of files to include in our find and replace
+#           include: ${{ github.workspace }}/arm_templats/deployment.parameters.json 
+#           # The string we want to replace
+#           find: '__webappname__, __devconnstr__'
+#           # The new string to replace with
+#           replace: ${{ github.event.inputs.webappname }}, ${{ steps.kvsecrets.outputs.testconnstr }}
 
       # Deployment of template    
       - name: Deploy Azure Resource Manager (ARM) Template
