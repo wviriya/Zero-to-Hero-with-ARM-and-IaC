@@ -27,6 +27,13 @@ on:
         default: 'webapp1'
         # Input has to be provided for the workflow to run
         required: true
+      type:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Deployment Type (webapp, serverless, vm)'
+        # Default value if no value is explicitly provided
+        default: 'webapp'
+        # Input has to be provided for the workflow to run
+        required: true
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -56,7 +63,7 @@ jobs:
         with:
           tokenPrefix: '__'
           tokenSuffix: '__'
-          files: ${{ github.workspace }}/arm_templates/deployment.parameters.json
+          files: ${{ github.workspace }}/arm_templates/${{ github.event.inputs.type }}/deployment.parameters.json
         env: 
           webappname: ${{ github.event.inputs.webappname }}
           sku: 'S1'
@@ -75,5 +82,5 @@ jobs:
           subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
           # Provide the name of a resource group, only required for resource Group deployments.
           resourceGroupName: ${{ github.event.inputs.resourceGroup }}
-          template: ${{ github.workspace }}/arm_templates/deployment.json  # Set this to the location of your template file
-          parameters: ${{ github.workspace }}/arm_templates/deployment.parameters.json 
+          template: ${{ github.workspace }}/arm_templates/${{ github.event.inputs.type }}/deployment.json  # Set this to the location of your template file
+          parameters: ${{ github.workspace }}/arm_templates/${{ github.event.inputs.type }}/deployment.parameters.json 
