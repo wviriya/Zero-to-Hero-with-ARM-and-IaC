@@ -10,7 +10,7 @@ on:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Resource Group Name'
         # Default value if no value is explicitly provided
-        default: 'arm-demo-rg'
+        default: 'arm-demo-gha'
         # Input has to be provided for the workflow to run
         required: true
       location:
