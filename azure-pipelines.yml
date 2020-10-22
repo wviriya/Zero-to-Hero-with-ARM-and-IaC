@@ -14,11 +14,11 @@ variables:
   - name: 'buildConfiguration'
     value: 'Release'
   - name: 'resource_group' 
-    value: 'armdemo-rg'
+    value: 'arm-demo-rg'
   - name: 'location'
     value: 'Australia East'
   - name: 'app_service_name' 
-    value: 'armdemovv2'
+    value: 'vwvarmdemo2'
   - name: 'deploy_app'
     value: true
   - name: 'deploy_infra' 
