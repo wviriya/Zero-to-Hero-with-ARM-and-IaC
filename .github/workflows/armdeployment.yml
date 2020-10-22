@@ -23,8 +23,6 @@ on:
       webappname:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Name of Web App'
-        # Default value if no value is explicitly provided
-        default: 'webapp1'
         # Input has to be provided for the workflow to run
         required: true
       type:
