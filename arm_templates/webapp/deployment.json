@@ -113,7 +113,7 @@
                "apiVersion": "2019-08-01",
                "location": "[parameters('region')]",
               "dependsOn": [
-                    "[resourceId('Microsoft.Web/sites', parameters('webappName'))]"
+                    "[resourceId('Microsoft.Web/sites', parameters('name'))]"
                ],
                "properties": {
                     "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
