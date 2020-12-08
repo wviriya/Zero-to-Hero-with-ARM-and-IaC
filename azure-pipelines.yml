@@ -14,7 +14,7 @@ variables:
   - name: 'buildConfiguration'
     value: 'Release'
   - name: 'resource_group' 
-    value: 'arm-demo-ado'
+    value: 'armdemo-rg'
   - name: 'location'
     value: 'Australia East'
   - name: 'app_service_name' 
