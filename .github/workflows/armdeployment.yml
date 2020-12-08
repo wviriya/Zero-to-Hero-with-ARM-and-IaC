@@ -68,6 +68,9 @@ jobs:
           devconnstr: ${{ steps.kvsecrets.outputs.testconnstr }}
           testconnstr: ${{ steps.kvsecrets.outputs.testconnstr }}
           prodconnstr: ${{ steps.kvsecrets.outputs.prodconnstr }}
+          subscription: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          resourceGroup: 'common-rg'
+          msi: ${{ secrets.MSI }}
 
       # Deployment of template    
       - name: Deploy Azure Resource Manager (ARM) Template
