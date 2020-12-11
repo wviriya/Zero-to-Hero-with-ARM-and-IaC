@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "name": {
-      "value": "ProvideUniqueAppName"
+      "value": "__webappname__"
     },
     "identity": {
-      "value": "/subscriptions/[xxxxxx-xxxx-xxxxx-xxxx-xxxxxxxxxx]/resourceGroups/[resource-group]/providers/Microsoft.ManagedIdentity/userAssignedIdentities/[msi]"
+      "value": "/subscriptions/__subscription__/resourceGroups/__resourceGroup__/providers/Microsoft.ManagedIdentity/userAssignedIdentities/__msi__"
     }
   }
 }
