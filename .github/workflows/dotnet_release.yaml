@@ -3,12 +3,18 @@ name: "Web App CD"
 on:
   pull_request:
     types: [closed]
+
+env:
+  APP_SVC_NAME: vwvarmdemo
     
 jobs:
-  publish:
+  dev_release:
     if: github.event.pull_request.merged == true
-    name: Create Release
+    name: Dev Release
     runs-on: ubuntu-latest
+    environment: dev
+    env:
+      ENV_NAME: dev
     steps:
     - uses: actions/checkout@v2
 
@@ -36,7 +42,85 @@ jobs:
       uses: Azure/webapps-deploy@v2
       with:
         # Name of the Azure Web App
-        app-name: vwvarmdemo
-        slot-name: dev
+        app-name: $APP_SVC_NAME
+        slot-name: $ENV_NAME
+        # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
+        package: ./artifact
+  
+  test_release:
+    if: github.event.pull_request.merged == true
+    name: Test Release
+    runs-on: ubuntu-latest
+    environment: test
+    env:
+      ENV_NAME: test
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Download workflow artifact
+      uses: dawidd6/action-download-artifact@v2.9.0
+      with:
+        # Workflow name
+        workflow: dotnet_build.yml
+        pr: ${{github.event.pull_request.number}}
+        # Artifact name (download all artifacts in not specified)
+        name: webapp
+        # Where to unpack the artifact
+        path: ./artifact
+    
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: ./artifact
+    
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Azure WebApp
+      uses: Azure/webapps-deploy@v2
+      with:
+        # Name of the Azure Web App
+        app-name: $APP_SVC_NAME
+        slot-name: $ENV_NAME
+        # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
+        package: ./artifact
+  
+  prod_release:
+    if: github.event.pull_request.merged == true
+    name: Prod Release
+    runs-on: ubuntu-latest
+    environment: prod
+    env:
+      ENV_NAME: prod
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Download workflow artifact
+      uses: dawidd6/action-download-artifact@v2.9.0
+      with:
+        # Workflow name
+        workflow: dotnet_build.yml
+        pr: ${{github.event.pull_request.number}}
+        # Artifact name (download all artifacts in not specified)
+        name: webapp
+        # Where to unpack the artifact
+        path: ./artifact
+    
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: ./artifact
+    
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Azure WebApp
+      uses: Azure/webapps-deploy@v2
+      with:
+        # Name of the Azure Web App
+        app-name: $APP_SVC_NAME
+        slot-name: $ENV_NAME
         # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
         package: ./artifact
