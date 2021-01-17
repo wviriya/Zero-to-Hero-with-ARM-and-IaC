@@ -53,12 +53,21 @@ A native infra-as-code solution for managing Azure resources using a declarative
 - [Template structure and syntax](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-syntax)
 - [Template references](https://docs.microsoft.com/en-us/azure/templates/)
 - [ARM template functions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions)
-- [What-if deployment (preview)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-deploy-what-if?tabs=azure-powershell)
-- [Deployment scripts (preview)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-script-template?tabs=CLI)
 - [ARM Template Toolkit for analyzing and testing](https://github.com/Azure/arm-ttk)
 
-### Tutorials
-- [Azure Pipelines and ARM template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/add-template-to-azure-pipelines)
+### CI/CD
+- [Deploy with Azure Pipelines](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/add-template-to-azure-pipelines)
+- [Deploy with GitHub Actions](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-github-actions)
+
+### Learning resources
+- [Microsoft Learn path on ARM template](https://docs.microsoft.com/en-us/learn/paths/deploy-manage-resource-manager-templates)
+
+### New and preview features
+- [Deployment scripts (GA - DEC 2020)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-tutorial-deployment-script)
+- [What-If deployment (GA - DEC 2020)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-deploy-what-if?tabs=azure-powershell)
+- [Template Specs (Preview)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-specs?tabs=azure-powershell)
+- [Azure Deployment Manager (Preview)](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/template-specs?tabs=azure-powershell)
+- [Bicep (Experimental)](https://github.com/azure/bicep)
 
 ## Other orchestrators
 ### Terraform with Azure
