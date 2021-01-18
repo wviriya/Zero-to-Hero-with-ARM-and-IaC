@@ -48,7 +48,8 @@ jobs:
         package: ./artifact
   
   test_release:
-    if: github.event.pull_request.merged == true
+    needs: [dev_release]
+    if: github.event.pull_request.merged == true && job.status
     name: Test Release
     runs-on: ubuntu-latest
     environment: test
@@ -85,6 +86,7 @@ jobs:
         package: ./artifact
   
   prod_release:
+    needs: [test_release]
     if: github.event.pull_request.merged == true
     name: Prod Release
     runs-on: ubuntu-latest
