@@ -5,7 +5,7 @@ on:
     types: [closed]
 
 env:
-  APP_SVC_NAME: wviriyaarm
+  APP_SVC_NAME: wviriyaarm 
     
 jobs:
   dev_release:
