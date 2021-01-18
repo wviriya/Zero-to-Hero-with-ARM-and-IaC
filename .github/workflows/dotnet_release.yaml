@@ -43,7 +43,7 @@ jobs:
       with:
         # Name of the Azure Web App
         app-name: ${{ env.APP_SVC_NAME }}
-        slot-name: ${{ SLOT }}
+        slot-name: dev
         # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
         package: ./artifact
   
@@ -52,8 +52,6 @@ jobs:
     name: Test Release
     runs-on: ubuntu-latest
     environment: test
-    env:
-      SLOT: test
     steps:
     - uses: actions/checkout@v2
 
@@ -82,7 +80,7 @@ jobs:
       with:
         # Name of the Azure Web App
         app-name: ${{ env.APP_SVC_NAME }}
-        slot-name: ${{ SLOT }}
+        slot-name: test
         # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
         package: ./artifact
   
