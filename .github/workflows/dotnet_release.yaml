@@ -13,8 +13,6 @@ jobs:
     name: Dev Release
     runs-on: ubuntu-latest
     environment: dev
-    env:
-      ENV_NAME: dev
     steps:
     - uses: actions/checkout@v2
 
@@ -43,7 +41,7 @@ jobs:
       with:
         # Name of the Azure Web App
         app-name: ${{ env.APP_SVC_NAME }}
-        slot-name: ${{ ENV_NAME }}
+        slot-name: ${{ environment }}
         # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
         package: ./artifact
   
@@ -52,8 +50,6 @@ jobs:
     name: Test Release
     runs-on: ubuntu-latest
     environment: test
-    env:
-      ENV_NAME: test
     steps:
     - uses: actions/checkout@v2
 
@@ -82,7 +78,7 @@ jobs:
       with:
         # Name of the Azure Web App
         app-name: ${{ env.APP_SVC_NAME }}
-        slot-name: ${{ ENV_NAME }}
+        slot-name: ${{ environment.name }}
         # Applies to Web App only: Path to package or folder. *.zip, *.war, *.jar or a folder to deploy
         package: ./artifact
   
@@ -91,8 +87,6 @@ jobs:
     name: Prod Release
     runs-on: ubuntu-latest
     environment: prod
-    env:
-      ENV_NAME: prod
     steps:
     - uses: actions/checkout@v2
 
