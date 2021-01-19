@@ -35,7 +35,7 @@ This sample is a guide for learning basic ARM Template usage. The links in this 
 
 ## [What is Infrastructure as Code?](https://docs.microsoft.com/en-us/azure/devops/learn/what-is-infrastructure-as-code)
 
-## [Why I should adopt Infrastructure as Code Practice (John Downs Blog)](https://github.com/johndowns/iac-blog-post/)
+## [Why I should adopt Infrastructure as Code Practice? (Read John Downs' Blog)](https://github.com/johndowns/iac-blog-post/)
 
 ## Azure Resource Manager (ARM) Template
 A native infra-as-code solution for managing Azure resources using a declarative programming paradigm.
