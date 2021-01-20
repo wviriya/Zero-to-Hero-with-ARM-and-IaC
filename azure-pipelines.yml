@@ -74,7 +74,7 @@ stages:
       inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
         artifactName: 'artifacts'
-    
+
   - job: BuildInfra
     displayName: Build Infrastructure
     condition: eq(variables.deploy_infra,true)
@@ -145,6 +145,10 @@ stages:
       runOnce:
         deploy:
           steps:
+          - task: ManualIntervention@8
+            inputs:
+              instructions: 'Please review App Server $(app_service_name) test slot'
+              emailRecipients: 'wviriya@microsoft.com'
           - task: AzureAppServiceSettings@1
             inputs:
               azureSubscription: '$(azure_service_connection)'
