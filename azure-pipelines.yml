@@ -79,10 +79,6 @@ stages:
     displayName: Build Infrastructure
     condition: eq(variables.deploy_infra,true)
     steps:
-    - task: ManualValidation@0
-      inputs:
-        notifyUsers: 'wviriya@microsoft.com'
-        instructions: 'Please review ARM Template before deployment'
     - task: AzureResourceManagerTemplateDeployment@3
       inputs:
         deploymentScope: 'Resource Group'
@@ -142,6 +138,12 @@ stages:
   condition: eq(variables.deploy_app,true)
   dependsOn: TestRelease
   jobs:
+  - job: manual_intervention
+    steps:
+    - task: ManualValidation@0
+      inputs:
+        notifyUsers: 'wviriya@microsoft.com'
+        instructions: 'Please review App Service Test Slot before proceed.'
   - deployment: prod
     displayName: swap production slot
     environment: prod
