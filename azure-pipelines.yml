@@ -143,7 +143,7 @@ stages:
     steps:
     - task: ManualIntervention@8
       inputs:
-        instructions: 'Please review App Server $(app_service_name) test slot'
+        instructions: 'Please review App Service Test slot'
         emailRecipients: 'wviriya@microsoft.com'
   - deployment: prod
     displayName: swap production slot
