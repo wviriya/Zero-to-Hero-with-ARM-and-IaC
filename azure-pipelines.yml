@@ -138,6 +138,13 @@ stages:
   condition: eq(variables.deploy_app,true)
   dependsOn: TestRelease
   jobs:
+  - job: manual
+    pool: server
+    steps:
+    - task: ManualIntervention@8
+      inputs:
+        instructions: 'Please review App Server $(app_service_name) test slot'
+        emailRecipients: 'wviriya@microsoft.com'
   - deployment: prod
     displayName: swap production slot
     environment: prod
@@ -145,10 +152,6 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: ManualIntervention@8
-            inputs:
-              instructions: 'Please review App Server $(app_service_name) test slot'
-              emailRecipients: 'wviriya@microsoft.com'
           - task: AzureAppServiceSettings@1
             inputs:
               azureSubscription: '$(azure_service_connection)'
