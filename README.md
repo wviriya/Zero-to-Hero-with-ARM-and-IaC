@@ -1,7 +1,7 @@
 ---
 services: ARM and Azure Pipeline 
 author: wviriya
-level: 200 
+level: 300
 ---
 
 # FastTrack for Azure - How to deploy Azure service and infrastructure using ARM Template. Leverage Azure Pipeline for continuous deployment.  
@@ -35,7 +35,7 @@ This sample is a guide for learning basic ARM Template usage. The links in this 
 
 ## [What is Infrastructure as Code?](https://docs.microsoft.com/en-us/azure/devops/learn/what-is-infrastructure-as-code)
 
-## [Why I should adopt Infrastructure as Code Practice? (Read John Downs' Blog)](https://github.com/johndowns/iac-blog-post/)
+## [Why I should adopt Infrastructure as Code Practice? (Read John Downs' Blog)](https://techcommunity.microsoft.com/t5/fasttrack-for-azure/the-benefits-of-infrastructure-as-code/ba-p/2069350)
 
 ## Azure Resource Manager (ARM) Template
 A native infra-as-code solution for managing Azure resources using a declarative programming paradigm.
